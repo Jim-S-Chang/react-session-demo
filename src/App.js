@@ -6,13 +6,6 @@ import AfterLogin from './component/AfterLogin'
 
 function App(props) {
 
-    console.log(`window.sessionStorage`, window.sessionStorage);
-
-    if (!window.sessionStorage.getItem('userId')) {
-        alert('please Login')
-        props.history.push('/login')
-    }
-
     return ( 
         <div className = "App" >
             <HashRouter >
