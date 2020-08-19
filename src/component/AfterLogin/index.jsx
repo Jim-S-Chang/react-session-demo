@@ -2,10 +2,20 @@ import React from 'react'
 import {Redirect} from 'react-router'
 
 class AfterLogin extends React.Component {
-    render() {
-        console.log(`window.sessionStorage`, window.sessionStorage);
+    componentDidMount() {
+        const expireTime = window.localStorage.getItem('expireTime')
+        console.log(`expireTime`, expireTime);
+        console.log(new Date().toISOString());
+        if ( expireTime === null || expireTime <= new Date().toISOString() ) {
+            const {history} = this.props
+            history.replace('/login')
+        }
+    }
 
-        if (!window.sessionStorage.getItem('userId')) {
+    render() {
+        console.log(window.localStorage.getItem('userInfo'));
+
+        if (window.localStorage.getItem('userInfo') === null) {
             alert('please Login')
             return (
                 <Redirect to="/login" />

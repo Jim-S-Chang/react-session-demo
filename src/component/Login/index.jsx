@@ -8,7 +8,10 @@ class Login extends React.Component {
             password: '12345'
         }).then((res) => {
             if (res.status === 200) {
-                window.sessionStorage.setItem('userId', res.data.userId)
+                console.log(`userInfo`, res.data.userInfo)
+                window.localStorage.setItem('userInfo', res.data.userInfo)
+                window.localStorage.setItem('expireTime', res.data.expireTime)
+                this.props.history.replace('/afterLogin')
             }
             console.log(res)
         })
