@@ -9,8 +9,10 @@ class Login extends React.Component {
         }).then((res) => {
             if (res.status === 200) {
                 console.log(`userInfo`, res.data.userInfo)
+                console.log(`res.headers`, res)
                 window.localStorage.setItem('userInfo', res.data.userInfo)
-                window.localStorage.setItem('expireTime', res.data.expireTime)
+                window.localStorage.setItem('token', res.headers.token)
+                window.localStorage.setItem('userId', res.headers.userid)
                 this.props.history.replace('/afterLogin')
             }
             console.log(res)

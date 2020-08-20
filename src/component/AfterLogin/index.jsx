@@ -1,15 +1,20 @@
 import React from 'react'
+import axios from 'axios'
 import {Redirect} from 'react-router'
 
 class AfterLogin extends React.Component {
     componentDidMount() {
-        const expireTime = window.localStorage.getItem('expireTime')
-        console.log(`expireTime`, expireTime);
-        console.log(new Date().toISOString());
-        if ( expireTime === null || expireTime <= new Date().toISOString() ) {
-            const {history} = this.props
-            history.replace('/login')
-        }
+        const token = window.localStorage.getItem('token')
+        axios.defaults.headers.token = token
+        axios.defaults.headers.userId = window.localStorage.getItem('userId')
+        console.log('componentDidMount')
+        axios.get('http://localhost:8080/status').then((res) => {
+        }).catch(e => {
+            console.log(e);
+            window.localStorage.clear()
+                const {history} = this.props
+                history.replace('/login')
+        })
     }
 
     render() {
