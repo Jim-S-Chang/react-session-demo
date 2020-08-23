@@ -12,8 +12,26 @@ class AfterLogin extends React.Component {
         }).catch(e => {
             console.log(e);
             window.localStorage.clear()
-                const {history} = this.props
-                history.replace('/login')
+            const {history} = this.props
+            history.replace('/login')
+        })
+    }
+
+    clickLogout = () => {
+        const token = window.localStorage.getItem('token')
+        axios.defaults.headers.token = token
+        axios.defaults.headers.userId = window.localStorage.getItem('userId')
+        console.log('componentDidMount')
+        axios.post('http://localhost:8080/logout').then((res) => {
+            console.log(res);
+            window.localStorage.clear()
+            const {history} = this.props
+            history.replace('/login')
+        }).catch(e => {
+            console.log(e);
+            window.localStorage.clear()
+            const {history} = this.props
+            history.replace('/login')
         })
     }
 
@@ -29,6 +47,7 @@ class AfterLogin extends React.Component {
         return (
             <div>
                 You have logged in success!
+                <button onClick={this.clickLogout}>logout</button>
             </div>
         )
     }
