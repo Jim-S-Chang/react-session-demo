@@ -2,6 +2,23 @@ import React from 'react'
 import axios from 'axios'
 
 class Login extends React.Component {
+    componentDidMount() {
+        const token = window.localStorage.getItem('token')
+        if (token === null) {
+            return
+        }
+        axios.defaults.headers.token = token
+        axios.defaults.headers.userId = window.localStorage.getItem('userId')
+        console.log('componentDidMount')
+        axios.get('http://localhost:8080/status').then((res) => {
+            console.log(`login res`, res);
+            if (res.status === 200) {
+                const {history} = this.props
+                history.replace('/afterLogin')
+            }
+        })
+    }
+
     clickLogin = () => {
         axios.post('http://localhost:8080/login', {
             userId: '12345',
